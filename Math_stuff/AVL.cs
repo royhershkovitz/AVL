@@ -13,6 +13,7 @@ namespace Math_stuff
         private AVL mum = null;
         private AVL right = null;
         private AVL left = null;
+        private AVL_Tree tree = null;
         public AVL(int data1)
         { 
             this.data = data1;
@@ -26,76 +27,140 @@ namespace Math_stuff
             this.left = left;           
         }
 
-        public void set_data(int data)
+        public void Set_data(int data)
         {
             this.data = data;
         }
 
-        public void set_right(AVL right)
+        public void Set_right(AVL right)
         {
             this.right = right;
         }
 
-        public void set_left(AVL left)
+        public void Set_left(AVL left)
         {
             this.left = left;
         }
 
-        public void set_mum(AVL mum)
+        public void Set_mum(AVL mum)
         {
             this.mum = mum;
         }
 
-        public int get_heigh()
+        public int Get_heigh()
         {
             return heigh;
         }
 
-        public int get_data()
+        public int Get_data()
         {
             return data;
         }
 
-        public AVL get_right()
+        public AVL Get_right()
         {
             return right;
         }
 
-        public AVL get_left()
+        public AVL Get_left()
         {
             return left;
         }
 
-        public AVL get_mum()
+        public AVL Get_mum()
         {
             return mum;
+        }        
+
+        public void Insert(int value)//logn
+        {
+            if (data < value) {
+                if (this.right != null)
+                    this.right.Insert(value);
+                else
+                {
+                    this.right = new AVL(value);
+                    this.right.Set_mum(this);
+                    this.right.SetTree(tree);
+                    this.right.Cal_heigh();
+                }
+            }
+            else {
+                if (this.left != null)
+                    this.left.Insert(value);
+                else
+                { 
+                    this.left = new AVL(value);
+                    this.left.Set_mum(this);
+                    this.left.SetTree(tree);
+                    this.left.Cal_heigh();
+                }
+            }
+
         }
 
-        public void cal_heigh()//logn
+        public void Remove(int value)//logn
         {
-            AVL mum = this.get_mum();           
+
+        }
+
+        // Add one to every suitable root, call order if it pass on avl rules
+        private void Cal_heigh()//logn
+        {
+            AVL mum = this.Get_mum();
             if (mum != null)
             {
                 int left_h;
-                if (mum.get_left() == null)
+                if (mum.Get_left() == null)
                     left_h = 0;
                 else
-                    left_h = mum.get_left().get_heigh();
+                    left_h = mum.Get_left().Get_heigh();
+
                 int right_h;
-                if (mum.get_right() == null)
+                if (mum.Get_right() == null)
                     right_h = 0;
                 else
-                    right_h = mum.get_right().get_heigh();
+                    right_h = mum.Get_right().Get_heigh();
+
                 int diff = right_h - left_h;
-                Console.WriteLine("cal_heigh " + get_mum());
-                Console.WriteLine(left_h + " " + right_h);
-                Console.Read();
-                if (diff == 2)
-                    mum.order(mum.get_right());
+
+                Console.WriteLine("Cal_heigh {0}, {1}, {2}", mum.Get_left(), mum, mum.Get_right());
+                Console.WriteLine("{0}, {1}, {2}", left_h, mum.Get_heigh(), right_h);
+                //Console.Read();
+
+                AVL X = this.Get_mum();
+
+                if (diff >= 2)
+                {
+                    this.heigh--;//for setup to order
+                    AVL mum_of_mum = mum.Get_mum();
+                    X = mum.Order(mum.Get_right());
+                    if (mum_of_mum != null)//set the mum of mum pointers
+                    {
+                        if (mum_of_mum.right == mum)
+                            mum_of_mum.right = X;
+                        else
+                            mum_of_mum.left = X;
+
+                    }
+                }
+                   
                 else
                 {
-                    if (diff == -2)
-                       mum.order(mum.get_left());
+                    if (diff <= -2)
+                    {
+                       this.heigh--;//for setup to order
+                        AVL mum_of_mum = mum.Get_mum();
+                        X = mum.Order(mum.Get_left());
+                        if (mum_of_mum != null)//set the mum of mum pointers
+                        {
+                            if (mum_of_mum.right == mum)
+                                mum_of_mum.right = X;
+                            else
+                                mum_of_mum.left = X;
+
+                        }
+                    }
                     else
                     {
                         if (diff > 0)
@@ -104,76 +169,114 @@ namespace Math_stuff
                             mum.heigh = left_h + 1;
                     }
                 }
-                mum.cal_heigh();
+                Console.WriteLine("{0}, {1}, {2}", left_h, mum.Get_heigh(), right_h);
+                //Console.Read();
+                X.Cal_heigh();
             }
         }
 
-        public void insert(int value)//logn
+        // Change the 
+        private AVL Order(AVL Y)//o(1)
         {
-            if (data < value) {
-                if (this.right != null)
-                    this.right.insert(value);
+            AVL Z = this;            
+            //Find x
+            int Y_left_h;
+            if (Y.Get_left() == null)
+                Y_left_h = 0;
+            else
+                Y_left_h = Y.Get_left().Get_heigh();
+            int Y_right_h;
+            if (Y.Get_right() == null)
+                Y_right_h = 0;
+            else
+                Y_right_h = Y.Get_right().Get_heigh();
+            AVL X;
+            if (Y_right_h > Y_left_h)
+                X = Y.Get_right();
+            else
+                X = Y.Get_left();
+
+            this.tree.Print_tree();
+            Console.WriteLine("Order "+Y.Get_heigh() + " " + X.Get_heigh()+ " " + Z.Get_heigh());            
+            //Console.Read();
+
+            AVL output;
+
+            if(Z.left == Y)
+                if (Y_right_h > Y_left_h)//x== y.right
+                {
+                    Console.WriteLine("Y X Z");
+                    Console.WriteLine(Y + " " + X + " " + Z);
+                    Y.Set_right(X.left);
+                    if (X.left != null)
+                        X.left.Set_mum(Y);
+                    Z.Set_left(X.right);
+                    if (X.right != null)
+                        X.right.Set_mum(Z);
+                    X.Set_left(Y);
+                    X.Set_right(Z);
+
+                    X.Set_mum(Z.mum);
+                    Z.Set_mum(X);
+                    Y.Set_mum(X);                    
+                    output = X;
+                }
                 else
                 {
-                    this.right = new AVL(value);
-                    this.right.set_mum(this);
-                    this.heigh++;
-                    this.cal_heigh();
+                    Console.WriteLine("X Y Z");
+                    Console.WriteLine(X + " " + Y + " " + Z);
+                    Z.Set_left(Y.right);
+                    if (Y.right != null)
+                        Y.right.Set_mum(Z);
+
+                    Y.Set_mum(Z.Get_mum());
+                    Y.Set_right(Z);
+                    Z.Set_mum(Y);
+                    output = Y;
+                }                
+            else
+            {
+                if (Y_right_h > Y_left_h)//x== y.right
+                {
+                    Console.WriteLine("Z Y X");
+                    Console.WriteLine(Z + " " + Y + " " + X);
+                    Z.Set_right(Y.left);
+                    if (Y.left != null)
+                        Y.left.Set_mum(Z);
+
+                    Y.Set_mum(Z.Get_mum());
+                    Y.Set_left(Z);
+                    Z.Set_mum(Y);
+                    output = Y;
                 }
-            }
-            else {
-                if (this.left != null)
-                    this.left.insert(value);
                 else
-                { 
-                    this.left = new AVL(value);
-                    this.left.set_mum(this);
-                    this.heigh++;
-                    this.cal_heigh();
+                {
+                    Console.WriteLine("Z X Y");
+                    Console.WriteLine(Z + " " + X + " " + Y);
+                    Y.Set_left(X.right);
+                    if (X.right != null)
+                        X.right.Set_mum(Y);
+                    Z.Set_right(X.left);
+                    if (X.left != null)
+                        X.left.Set_mum(Z);
+                    X.Set_left(Z);
+                    X.Set_right(Y);
+                    
+                    X.Set_mum(Z.mum);
+                    Z.Set_mum(X);
+                    Y.Set_mum(X);
+                    output = X;                    
                 }
-            }
-
+            }           
+            if (output.mum == null)
+                tree.Update_root(output);
+            this.tree.Print_tree();
+            return output;
         }
 
-        public void remove(int value)//logn
+        public void SetTree(AVL_Tree tree)
         {
-
-        }
-
-        public void order(AVL Y)//o(1)
-        {
-            AVL Z = this;
-            int left_h;
-            if (Y.get_left() == null)
-                left_h = 0;
-            else
-                left_h = Y.get_left().get_heigh();
-            int right_h;
-            if (Y.get_right() == null)
-                right_h = 0;
-            else
-                right_h = Y.get_right().get_heigh();
-            AVL X;
-            if (right_h > left_h)
-                X = Y.get_right();
-            else
-                X = Y.get_left();
-            this.tree_print();
-            Console.WriteLine(Y.get_heigh() + " " + X.get_heigh()+ " " + Z.get_heigh());
-            Console.WriteLine(Y + " " + X + " " + Z);
-            Console.Read();
-            Y.set_right(X.left);
-            if (X.left != null)
-                X.left.set_mum(Y);
-            Z.set_left(X.right);
-            if (X.right != null)
-                X.right.set_mum(Z);
-            X.set_left(Y);
-            X.set_right(Z);
-            X.set_mum(Z.mum);
-            Z.set_mum(X);
-            Y.set_mum(X);
-            this.tree_print();
+            this.tree = tree;
         }
 
         override
@@ -182,21 +285,21 @@ namespace Math_stuff
             return data.ToString();
         }
 
-        public void tree_print()
+        public void Tree_print()
         {
-            preorder();
+            Preorder();
             Console.WriteLine("/preorder");
             Inorder();
             Console.WriteLine("/inorder");
         }
 
-        public void preorder()
+        public void Preorder()
         {
             Console.Write(this + " ");
             if (left != null)
-                left.preorder();            
+                left.Preorder();            
             if (right != null)
-                right.preorder();
+                right.Preorder();
 
         }
         public void Inorder()
@@ -206,7 +309,14 @@ namespace Math_stuff
             Console.Write(this + " ");
             if (right != null)
                 right.Inorder();
-
+        }
+        public void Postorder()
+        {
+            if (left != null)
+                left.Postorder();          
+            if (right != null)
+                right.Postorder();
+            Console.Write(this + " ");
         }
     }
 }

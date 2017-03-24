@@ -3,3 +3,9 @@ c:\users\user\documents\visual studio 2015\Projects\Math_stuff\Math_stuff\bin\De
 c:\users\user\documents\visual studio 2015\Projects\Math_stuff\Math_stuff\bin\Debug\Math_stuff.pdb
 c:\users\user\documents\visual studio 2015\Projects\Math_stuff\Math_stuff\obj\Debug\Math_stuff.exe
 c:\users\user\documents\visual studio 2015\Projects\Math_stuff\Math_stuff\obj\Debug\Math_stuff.pdb
+F:\user\Documents\Visual Studio 2017\Projects\Math_stuff\Math_stuff\bin\Debug\Math_stuff.exe.config
+F:\user\Documents\Visual Studio 2017\Projects\Math_stuff\Math_stuff\bin\Debug\Math_stuff.exe
+F:\user\Documents\Visual Studio 2017\Projects\Math_stuff\Math_stuff\bin\Debug\Math_stuff.pdb
+F:\user\Documents\Visual Studio 2017\Projects\Math_stuff\Math_stuff\obj\Debug\Math_stuff.exe
+F:\user\Documents\Visual Studio 2017\Projects\Math_stuff\Math_stuff\obj\Debug\Math_stuff.pdb
+F:\user\Documents\Visual Studio 2017\Projects\Math_stuff\Math_stuff\obj\Debug\Math_stuff.csprojResolveAssemblyReference.cache
