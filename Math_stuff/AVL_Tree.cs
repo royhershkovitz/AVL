@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace Math_stuff
 {
-    class AVL_Tree//<T>
+    class AVL_Tree//<T>->COMPERABLE PROBLEM CHECK
     {
         private AVL root = null;
-        public AVL_Tree()
-        {
-        }
+        public AVL_Tree() {     }
 
         public AVL_Tree(int data)//AVL_Tree(T data)
         {
@@ -61,6 +59,12 @@ namespace Math_stuff
         public void Print_tree()
         {
             root.Tree_print();
+        }
+
+        public void Height_print()
+        {
+            root.Height_print();
+            Console.WriteLine("/*Inorder-height*/");
         }
     }
 }

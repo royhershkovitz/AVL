@@ -1,0 +1,5 @@
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\check\bin\Release\check.exe.config
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\check\bin\Release\check.exe
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\check\bin\Release\check.pdb
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\check\obj\Release\check.exe
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\check\obj\Release\check.pdb

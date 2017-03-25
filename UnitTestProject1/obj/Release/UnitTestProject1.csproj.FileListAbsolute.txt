@@ -1,0 +1,12 @@
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\UnitTestProject1\bin\Release\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\UnitTestProject1\bin\Release\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\UnitTestProject1\bin\Release\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\UnitTestProject1\bin\Release\UnitTestProject1.dll
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\UnitTestProject1\bin\Release\UnitTestProject1.pdb
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\UnitTestProject1\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\UnitTestProject1\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\UnitTestProject1\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\UnitTestProject1\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\UnitTestProject1\obj\Release\UnitTestProject1.csprojResolveAssemblyReference.cache
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\UnitTestProject1\obj\Release\UnitTestProject1.dll
+F:\User\Documents\Visual Studio 2017\Projects\Math_stuff\UnitTestProject1\obj\Release\UnitTestProject1.pdb

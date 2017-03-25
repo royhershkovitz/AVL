@@ -1,0 +1,5 @@
+F:\user\Documents\Visual Studio 2017\Projects\Math_stuff\Math_stuff\bin\Release\Math_stuff.exe.config
+F:\user\Documents\Visual Studio 2017\Projects\Math_stuff\Math_stuff\bin\Release\Math_stuff.exe
+F:\user\Documents\Visual Studio 2017\Projects\Math_stuff\Math_stuff\bin\Release\Math_stuff.pdb
+F:\user\Documents\Visual Studio 2017\Projects\Math_stuff\Math_stuff\obj\Release\Math_stuff.exe
+F:\user\Documents\Visual Studio 2017\Projects\Math_stuff\Math_stuff\obj\Release\Math_stuff.pdb

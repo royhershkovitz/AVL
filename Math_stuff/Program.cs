@@ -8,10 +8,51 @@ namespace Math_stuff
 {
     class Program
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine(44 + " " + 17 + " " + 30 + " " + 62 + " " + 50 + " " + 78 + " " + 88 + " " + 48 + " " + 54 + " " + 18 + " " + 31);
-            AVL_Tree Tree = new AVL_Tree(44);// need to be turned into a tree
+        static void Main()
+        {           
+            AVL_Tree Tree = new AVL_Tree(1);// need to be turned into a tree    
+            Console.WriteLine(2);
+            Tree.Insert(2);
+            Console.WriteLine(1);
+            Tree.Insert(1);
+            Console.WriteLine(2);
+            Tree.Insert(2);
+            Console.WriteLine(1);
+            Tree.Insert(1);
+            Console.WriteLine(2);
+            Tree.Insert(2);
+            Console.WriteLine(1);
+            Tree.Insert(1);
+            Console.WriteLine(2);
+            Tree.Insert(2);
+            Tree.Print_tree();
+            Tree.Height_print();
+            Console.WriteLine(0);
+            Tree.Insert(0);
+            Console.WriteLine(3);
+            Tree.Insert(3);//test0
+            /*Console.WriteLine(2);
+            Tree.Insert(2);
+            Console.WriteLine(3);
+            Tree.Insert(3);
+            Console.WriteLine(4);
+            Tree.Insert(4);
+            Console.WriteLine(5);
+            Tree.Insert(5);
+            Console.WriteLine(6);
+            Tree.Insert(6);
+            Console.WriteLine(7);
+            Tree.Insert(7);
+            Console.WriteLine(8);
+            Tree.Insert(8);
+            Console.WriteLine(9);
+            Tree.Insert(9);
+            Console.WriteLine(10);
+            Tree.Insert(10);
+            Console.WriteLine(11);
+            Tree.Insert(11);
+            Console.WriteLine(12);
+            Tree.Insert(12);//test1
             Console.WriteLine(17);
             Tree.Insert(17);
             Console.WriteLine(30);
@@ -27,8 +68,7 @@ namespace Math_stuff
             Console.WriteLine(48);
             Tree.Insert(48);
             Console.WriteLine(54);
-            Tree.Insert(54);
-            Tree.Print_tree();
+            Tree.Insert(54);            
             Console.WriteLine(18);
             Tree.Insert(18);
             Console.WriteLine(31);
@@ -50,8 +90,9 @@ namespace Math_stuff
             Console.WriteLine(94);
             Tree.Insert(94);
             Console.WriteLine(95);
-            Tree.Insert(95);
+            Tree.Insert(95);*/
             Tree.Print_tree();
+            Tree.Height_print();
             Console.WriteLine("/*************END_TEST*************/");
             Console.Read();
         }

@@ -6,94 +6,63 @@ using System.Threading.Tasks;
 
 namespace Math_stuff
 {
-    class AVL//<T>
+    class AVL//<T>// will work just if T is comperable
     {
-        private int heigh = 1;
-        private int data;
-        private AVL mum = null;
-        private AVL right = null;
-        private AVL left = null;
-        private AVL_Tree tree = null;
-        public AVL(int data1)
-        { 
-            this.data = data1;
+        //The Avl Height        
+        protected int Height { get; set; } // The Height property   
+        //The tree information        
+        public int Data { get; } // The Data property   
+        //Mother pointer        
+        private AVL Mum { get; set; } // The Mum property   
+        //The tree right son       
+        private AVL Right { get; set; }  // Right Data property   
+        //The tree left son       
+        private AVL Left { get; set; } // The Left property   
+        //To call the tre for root updates
+        private AVL_Tree tree = null; // The tree field
+        private AVL_Tree Tree { get; set; } // The Tree property   
+
+        //#Building function
+        public AVL(int data)
+        {
+            Height = 1;
+            Data = data;
+            Right = null;
+            Left = null;
         }
-        
+        //#Building function2
         public AVL(int data, AVL right, AVL left)
         {
-            this.heigh++;
-            this.data = data;
-            this.right = right;
-            this.left = left;           
+            Height = 1;
+            Data = data;
+            Right = right;
+            Left = left;           
         }
-
-        public void Set_data(int data)
-        {
-            this.data = data;
-        }
-
-        public void Set_right(AVL right)
-        {
-            this.right = right;
-        }
-
-        public void Set_left(AVL left)
-        {
-            this.left = left;
-        }
-
-        public void Set_mum(AVL mum)
-        {
-            this.mum = mum;
-        }
-
-        public int Get_heigh()
-        {
-            return heigh;
-        }
-
-        public int Get_data()
-        {
-            return data;
-        }
-
-        public AVL Get_right()
-        {
-            return right;
-        }
-
-        public AVL Get_left()
-        {
-            return left;
-        }
-
-        public AVL Get_mum()
-        {
-            return mum;
-        }        
 
         public void Insert(int value)//logn
         {
-            if (data < value) {
-                if (this.right != null)
-                    this.right.Insert(value);
+            if (value > Data) {
+                if (Right != null)
+                    Right.Insert(value);
                 else
                 {
-                    this.right = new AVL(value);
-                    this.right.Set_mum(this);
-                    this.right.SetTree(tree);
-                    this.right.Cal_heigh();
+                    Right = new AVL(value);
+                    Right.Mum = this;
+                    Right.SetTree(tree);
+                    Console.WriteLine("found_place");tree.Print_tree();tree.Height_print();
+                    Right.Cal_heigh();
                 }
             }
             else {
-                if (this.left != null)
-                    this.left.Insert(value);
+                if (Left != null)
+                    Left.Insert(value);
                 else
                 { 
-                    this.left = new AVL(value);
-                    this.left.Set_mum(this);
-                    this.left.SetTree(tree);
-                    this.left.Cal_heigh();
+                    Left = new AVL(value);
+                    Left.Mum = this;
+                    Left.SetTree(tree);
+                    Console.WriteLine("found_place");tree.Print_tree();tree.Height_print();
+                    Left.Cal_heigh();
                 }
             }
 
@@ -107,69 +76,83 @@ namespace Math_stuff
         // Add one to every suitable root, call order if it pass on avl rules
         private void Cal_heigh()//logn
         {
-            AVL mum = this.Get_mum();
-            if (mum != null)
+           if (Mum != null)
             {
                 int left_h;
-                if (mum.Get_left() == null)
+                if (Mum.Left == null)
                     left_h = 0;
                 else
-                    left_h = mum.Get_left().Get_heigh();
+                    left_h = Mum.Left.Height;
 
                 int right_h;
-                if (mum.Get_right() == null)
+                if (Mum.Right == null)
                     right_h = 0;
                 else
-                    right_h = mum.Get_right().Get_heigh();
+                    right_h = Mum.Right.Height;
 
                 int diff = right_h - left_h;
 
-                Console.WriteLine("Cal_heigh {0}, {1}, {2}", mum.Get_left(), mum, mum.Get_right());
-                Console.WriteLine("{0}, {1}, {2}", left_h, mum.Get_heigh(), right_h);
+                //Console.WriteLine("Cal_heigh {0}, {1}, {2}", Mum.Left, Mum, Mum.Right);
+                //Console.WriteLine("{0}, {1}, {2}", left_h, Mum.Height, right_h);
                 //Console.Read();
 
-                AVL X = this.Get_mum();
-
-                if (diff >= 2)
+                AVL X = Mum;
+               
+                if (diff == 2)
                 {
-                    this.heigh--;//for setup to order
-                    AVL mum_of_mum = mum.Get_mum();
-                    X = mum.Order(mum.Get_right());
+                    X = Mum.Order(Mum.Left);
+                    Mum.Height -= 1;//for setup to order
+                    AVL mum_of_mum = Mum.Mum;   
                     if (mum_of_mum != null)//set the mum of mum pointers
                     {
-                        if (mum_of_mum.right == mum)
-                            mum_of_mum.right = X;
+                        if (mum_of_mum.Right == Mum)
+                        {
+                            X = Mum.Order(Mum.Right);
+                            mum_of_mum.Right = X;
+                        }
                         else
-                            mum_of_mum.left = X;
-
+                        {
+                            X = Mum.Order(Mum.Right);
+                            mum_of_mum.Left = X;
+                        }                           
                     }
+                    else
+                        X = Mum.Order(Mum.Right);
                 }
-                   
                 else
                 {
-                    if (diff <= -2)
+                    if (diff == -2)
                     {
-                       this.heigh--;//for setup to order
-                        AVL mum_of_mum = mum.Get_mum();
-                        X = mum.Order(mum.Get_left());
+                        Mum.Height -= 1;//for setup to order
+                        AVL mum_of_mum = Mum.Mum;                        
                         if (mum_of_mum != null)//set the mum of mum pointers
                         {
-                            if (mum_of_mum.right == mum)
-                                mum_of_mum.right = X;
+                            if (mum_of_mum.Right == Mum)
+                            {
+                                X = Mum.Order(Mum.Left);
+                                mum_of_mum.Right = X;
+                            }
                             else
-                                mum_of_mum.left = X;
-
+                            {
+                                X = Mum.Order(Mum.Left);
+                                mum_of_mum.Left = X;
+                            }
                         }
+                        else
+                            X = Mum.Order(Mum.Left);
                     }
                     else
                     {
                         if (diff > 0)
-                            mum.heigh = right_h + 1;
+                            Mum.Height = right_h + 1;
                         else
-                            mum.heigh = left_h + 1;
+                            Mum.Height = left_h + 1;
                     }
+
                 }
-                Console.WriteLine("{0}, {1}, {2}", left_h, mum.Get_heigh(), right_h);
+
+
+                //Console.WriteLine("{0}, {1}, {2}", left_h, Height, right_h);
                 //Console.Read();
                 X.Cal_heigh();
             }
@@ -181,110 +164,142 @@ namespace Math_stuff
             AVL Z = this;            
             //Find x
             int Y_left_h;
-            if (Y.Get_left() == null)
+            if (Y.Left == null)
                 Y_left_h = 0;
             else
-                Y_left_h = Y.Get_left().Get_heigh();
+                Y_left_h = Y.Left.Height;
+
             int Y_right_h;
-            if (Y.Get_right() == null)
+            if (Y.Right == null)
                 Y_right_h = 0;
             else
-                Y_right_h = Y.Get_right().Get_heigh();
+                Y_right_h = Y.Right.Height;
+
             AVL X;
             if (Y_right_h > Y_left_h)
-                X = Y.Get_right();
+                X = Y.Right;
             else
-                X = Y.Get_left();
+                X = Y.Left;
 
-            this.tree.Print_tree();
-            Console.WriteLine("Order "+Y.Get_heigh() + " " + X.Get_heigh()+ " " + Z.Get_heigh());            
-            //Console.Read();
+            //tree.Print_tree(); Console.WriteLine("Order "+Y.Height + " " + X.Height + " " + Z.Height); //Console.Read();
 
             AVL output;
 
-            if(Z.left == Y)
-                if (Y_right_h > Y_left_h)//x== y.right
+            if(Z.Left == Y)
+                if (Y_right_h > Y_left_h)//x==y.right
                 {
-                    Console.WriteLine("Y X Z");
-                    Console.WriteLine(Y + " " + X + " " + Z);
-                    Y.Set_right(X.left);
-                    if (X.left != null)
-                        X.left.Set_mum(Y);
-                    Z.Set_left(X.right);
-                    if (X.right != null)
-                        X.right.Set_mum(Z);
-                    X.Set_left(Y);
-                    X.Set_right(Z);
+                    Console.WriteLine("\tY X Z (LR)"); Console.WriteLine(Y + " " + X + " " + Z);
 
-                    X.Set_mum(Z.mum);
-                    Z.Set_mum(X);
-                    Y.Set_mum(X);                    
+                    Y.Right = X.Left;
+                    if (X.Left != null)
+                        X.Left.Mum = Y;
+                    Z.Left = X.Right;
+                    if (X.Right != null)
+                        X.Right.Mum = Z;
+
+                    X.Left = Y;
+                    X.Right = Z;
+
+                    X.Mum  = Z.Mum;
+                    Z.Mum = X;
+                    Y.Mum = X;
+
+                    X.Height += 1;
+                    Y.Height -= 1;
+
                     output = X;
                 }
                 else
                 {
-                    Console.WriteLine("X Y Z");
-                    Console.WriteLine(X + " " + Y + " " + Z);
-                    Z.Set_left(Y.right);
-                    if (Y.right != null)
-                        Y.right.Set_mum(Z);
+                    Console.WriteLine("\tX Y Z (LL)"); Console.WriteLine(X + " " + Y + " " + Z);
 
-                    Y.Set_mum(Z.Get_mum());
-                    Y.Set_right(Z);
-                    Z.Set_mum(Y);
+                    Z.Left = Y.Right;
+                    if (Y.Right != null)
+                        Y.Right.Mum = Z;
+
+                    Y.Mum = Z.Mum;
+                    Y.Right = Z;
+                    Z.Mum = Y;
                     output = Y;
+                    if (Y_right_h == Y_left_h)//when no prefernce for x the height is differenct
+                    {
+                        Z.Height += 1;
+                        Y.Height += 1;
+                    }
                 }                
             else
             {
-                if (Y_right_h > Y_left_h)//x== y.right
+                if (Y_right_h >= Y_left_h)//x== y.right// I found out that the cases which Y_right_h == Y_left_h solved better with the RR case
                 {
-                    Console.WriteLine("Z Y X");
-                    Console.WriteLine(Z + " " + Y + " " + X);
-                    Z.Set_right(Y.left);
-                    if (Y.left != null)
-                        Y.left.Set_mum(Z);
+                    Console.WriteLine("\tZ Y X (RR)"); Console.WriteLine(Z + " " + Y + " " + X);
+                    Z.Right = Y.Left;
+                    if (Y.Left != null)
+                        Y.Left.Mum = Z;
 
-                    Y.Set_mum(Z.Get_mum());
-                    Y.Set_left(Z);
-                    Z.Set_mum(Y);
+                    Y.Mum = Z.Mum;
+                    Y.Left = Z;
+                    Z.Mum = Y;
                     output = Y;
+                    if (Y_right_h == Y_left_h)//when no prefernce for x the height is differenct
+                    {
+                        Z.Height += 1;
+                        Y.Height += 1;
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Z X Y");
-                    Console.WriteLine(Z + " " + X + " " + Y);
-                    Y.Set_left(X.right);
-                    if (X.right != null)
-                        X.right.Set_mum(Y);
-                    Z.Set_right(X.left);
-                    if (X.left != null)
-                        X.left.Set_mum(Z);
-                    X.Set_left(Z);
-                    X.Set_right(Y);
+                    Console.WriteLine("\tZ X Y (RL)"); Console.WriteLine(Z + " " + X + " " + Y);
+                    Y.Left = X.Right;
+                    if (X.Right != null)
+                        X.Right.Mum = Y;
+                    Z.Right = X.Left;
+                    if (X.Left != null)
+                        X.Left.Mum = Z;
+
+                    X.Left = Z;
+                    X.Right = Y;
                     
-                    X.Set_mum(Z.mum);
-                    Z.Set_mum(X);
-                    Y.Set_mum(X);
+                    X.Mum = Z.Mum;
+                    Z.Mum = X;
+                    Y.Mum = X;
+
+                    X.Height += 1;
+                    Y.Height -= 1;
+
                     output = X;                    
                 }
             }           
-            if (output.mum == null)
+            if (output.Mum == null)
                 tree.Update_root(output);
-            this.tree.Print_tree();
+            //tree.Print_tree();
             return output;
         }
 
+        // print the class AVL_Tree field data
         public void SetTree(AVL_Tree tree)
         {
             this.tree = tree;
         }
 
+        // print the tree data
         override
         public string ToString()
         {
-            return data.ToString();
+            return Data.ToString();
+        }
+        
+        //print every inorder sturture with its height value
+        public void Height_print()
+        {
+            if (Left != null)
+                Left.Height_print();
+            Console.Write(this + "_" + Height + " ,");
+            if (Right != null)
+                Right.Height_print();
         }
 
+
+        // print the tree structure
         public void Tree_print()
         {
             Preorder();
@@ -292,30 +307,32 @@ namespace Math_stuff
             Inorder();
             Console.WriteLine("/inorder");
         }
-
+        // print the 'Preorder' tree structure
         public void Preorder()
         {
             Console.Write(this + " ");
-            if (left != null)
-                left.Preorder();            
-            if (right != null)
-                right.Preorder();
+            if (Left != null)
+                Left.Preorder();            
+            if (Right != null)
+                Right.Preorder();
 
         }
+        // print the 'Inorder' tree structure
         public void Inorder()
         {
-            if (left != null)
-                left.Inorder();
+            if (Left != null)
+                Left.Inorder();
             Console.Write(this + " ");
-            if (right != null)
-                right.Inorder();
+            if (Right != null)
+                Right.Inorder();
         }
+        // print the 'Postorder' tree structure
         public void Postorder()
         {
-            if (left != null)
-                left.Postorder();          
-            if (right != null)
-                right.Postorder();
+            if (Left != null)
+                Left.Postorder();          
+            if (Right != null)
+                Right.Postorder();
             Console.Write(this + " ");
         }
     }
