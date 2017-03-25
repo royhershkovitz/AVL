@@ -10,7 +10,7 @@ namespace Math_stuff
     {
         static void Main()
         {           
-            AVL_Tree Tree = new AVL_Tree(1);// need to be turned into a tree    
+            AVL_Tree<int> Tree = new AVL_Tree<int>(1);// need to be turned into a tree    
             Console.WriteLine(2);
             Tree.Insert(2);
             Console.WriteLine(1);
@@ -90,7 +90,7 @@ namespace Math_stuff
             Console.WriteLine(94);
             Tree.Insert(94);
             Console.WriteLine(95);
-            Tree.Insert(95);*/
+            Tree.Insert(95);*///test1_extedion
             Tree.Print_tree();
             Tree.Height_print();
             Console.WriteLine("/*************END_TEST*************/");

@@ -6,50 +6,55 @@ using System.Threading.Tasks;
 
 namespace Math_stuff
 {
-    class AVL_Tree//<T>->COMPERABLE PROBLEM CHECK
+    class AVL_Tree<T> where T : IComparable<T>
     {
-        private AVL root = null;
+        private AVL<T> root = null;
+        //BUILDING FUNCTIONS
         public AVL_Tree() {     }
 
-        public AVL_Tree(int data)//AVL_Tree(T data)
+        public AVL_Tree(T data)
         {
-            root = new AVL(data);
+            root = new AVL<T>(data);
             root.SetTree(this);
         }
 
-        public AVL_Tree(AVL left, int data, AVL right)//AVL_Tree(AVL left, T data, AVL right)
+        public AVL_Tree(AVL<T> left, T data, AVL<T> right)
         {
-            root = new AVL(data, right, left);
+            root = new AVL<T>(data, right, left);
             root.SetTree(this);
         }
-        
-        public void Insert(int value)//Insert(T value)
-        {
-            if (root == null)
-            {
-                root = new AVL(value);
-                root.SetTree(this);
-            }
-            else
-                root.Insert(value);
-        }
 
-        public void Update_root(AVL root)
+        // THE ROOT MAY CHANGED DURING THE INSERTING OR REMOVING
+        public void Update_root(AVL<T> root)
         {
             this.root = root;
         }
 
+        // INSERTs VALUE TO THE TREE
+        public void Insert(T value)
+        {
+            if (root == null)
+            {
+                root = new AVL<T>(value);
+                root.SetTree(this);
+            }
+            else
+                root.Insert(value);
+        }        
 
-        public void Remove(int value)//Remove(T value)
+        // REMOVEs VALUE FROM THE TREE
+        public void Remove(T value)
         {
             root.Remove(value);
         }
 
+        //Returns true if the tree is empty
         public bool IsEmpty()
         {
             return root == null;
         }
 
+        //print the tree structure
         override
         public String ToString()
         {

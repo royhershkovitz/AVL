@@ -6,24 +6,23 @@ using System.Threading.Tasks;
 
 namespace Math_stuff
 {
-    class AVL//<T>// will work just if T is comperable
+    class AVL<T> where T : IComparable<T>// will work just if T is comperable
     {
         //The Avl Height        
         protected int Height { get; set; } // The Height property   
         //The tree information        
-        public int Data { get; } // The Data property   
+        public T Data { get; } // The Data property   
         //Mother pointer        
-        private AVL Mum { get; set; } // The Mum property   
+        private AVL<T> Mum { get; set; } // The Mum property   
         //The tree right son       
-        private AVL Right { get; set; }  // Right Data property   
+        private AVL<T> Right { get; set; }  // Right Data property   
         //The tree left son       
-        private AVL Left { get; set; } // The Left property   
+        private AVL<T> Left { get; set; } // The Left property   
         //To call the tre for root updates
-        private AVL_Tree tree = null; // The tree field
-        private AVL_Tree Tree { get; set; } // The Tree property   
+        public AVL_Tree<T> Tree { get; private set; } // The tree property        
 
         //#Building function
-        public AVL(int data)
+        public AVL(T data)
         {
             Height = 1;
             Data = data;
@@ -31,7 +30,7 @@ namespace Math_stuff
             Left = null;
         }
         //#Building function2
-        public AVL(int data, AVL right, AVL left)
+        public AVL(T data, AVL<T> right, AVL<T> left)
         {
             Height = 1;
             Data = data;
@@ -39,17 +38,23 @@ namespace Math_stuff
             Left = left;           
         }
 
-        public void Insert(int value)//logn
+        //get a tree and update the tree value
+        public void SetTree(AVL_Tree<T> tree)
         {
-            if (value > Data) {
+            Tree = tree;
+        }
+
+        public void Insert(T value)//logn
+        {
+            if (value.CompareTo(Data) > 0) {
                 if (Right != null)
                     Right.Insert(value);
                 else
                 {
-                    Right = new AVL(value);
+                    Right = new AVL<T>(value);
                     Right.Mum = this;
-                    Right.SetTree(tree);
-                    Console.WriteLine("found_place");tree.Print_tree();tree.Height_print();
+                    Right.Tree = Tree;
+                    Console.WriteLine("found_place");Tree.Print_tree();Tree.Height_print();
                     Right.Cal_heigh();
                 }
             }
@@ -58,17 +63,17 @@ namespace Math_stuff
                     Left.Insert(value);
                 else
                 { 
-                    Left = new AVL(value);
+                    Left = new AVL<T>(value);
                     Left.Mum = this;
-                    Left.SetTree(tree);
-                    Console.WriteLine("found_place");tree.Print_tree();tree.Height_print();
+                    Left.Tree = Tree;
+                    Console.WriteLine("found_place");Tree.Print_tree();Tree.Height_print();
                     Left.Cal_heigh();
                 }
             }
 
         }
 
-        public void Remove(int value)//logn
+        public void Remove(T value)//logn
         {
 
         }
@@ -96,13 +101,13 @@ namespace Math_stuff
                 //Console.WriteLine("{0}, {1}, {2}", left_h, Mum.Height, right_h);
                 //Console.Read();
 
-                AVL X = Mum;
+                AVL<T> X = Mum;
                
                 if (diff == 2)
                 {
                     X = Mum.Order(Mum.Left);
                     Mum.Height -= 1;//for setup to order
-                    AVL mum_of_mum = Mum.Mum;   
+                    AVL<T> mum_of_mum = Mum.Mum;   
                     if (mum_of_mum != null)//set the mum of mum pointers
                     {
                         if (mum_of_mum.Right == Mum)
@@ -124,7 +129,7 @@ namespace Math_stuff
                     if (diff == -2)
                     {
                         Mum.Height -= 1;//for setup to order
-                        AVL mum_of_mum = Mum.Mum;                        
+                        AVL<T> mum_of_mum = Mum.Mum;                        
                         if (mum_of_mum != null)//set the mum of mum pointers
                         {
                             if (mum_of_mum.Right == Mum)
@@ -159,9 +164,9 @@ namespace Math_stuff
         }
 
         // Change the 
-        private AVL Order(AVL Y)//o(1)
+        private AVL<T> Order(AVL<T> Y)//o(1)
         {
-            AVL Z = this;            
+            AVL<T> Z = this;            
             //Find x
             int Y_left_h;
             if (Y.Left == null)
@@ -175,7 +180,7 @@ namespace Math_stuff
             else
                 Y_right_h = Y.Right.Height;
 
-            AVL X;
+            AVL<T> X;
             if (Y_right_h > Y_left_h)
                 X = Y.Right;
             else
@@ -183,7 +188,7 @@ namespace Math_stuff
 
             //tree.Print_tree(); Console.WriteLine("Order "+Y.Height + " " + X.Height + " " + Z.Height); //Console.Read();
 
-            AVL output;
+            AVL<T> output;
 
             if(Z.Left == Y)
                 if (Y_right_h > Y_left_h)//x==y.right
@@ -270,15 +275,9 @@ namespace Math_stuff
                 }
             }           
             if (output.Mum == null)
-                tree.Update_root(output);
+                Tree.Update_root(output);
             //tree.Print_tree();
             return output;
-        }
-
-        // print the class AVL_Tree field data
-        public void SetTree(AVL_Tree tree)
-        {
-            this.tree = tree;
         }
 
         // print the tree data
